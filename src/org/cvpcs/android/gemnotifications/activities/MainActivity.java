@@ -1,4 +1,4 @@
-package com.cyanogenmod.updatenotify;
+package org.cvpcs.android.gemnotifications.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -14,20 +14,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.cyanogenmod.updatenotify.utils.DeviceRegistrar;
-import com.cyanogenmod.updatenotify.utils.NightlyLicense;
-import com.cyanogenmod.updatenotify.utils.Preferences;
-import com.cyanogenmod.updatenotify.utils.StringUtils;
+import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
+import org.cvpcs.android.gemnotifications.utils.NightlyLicense;
+import org.cvpcs.android.gemnotifications.utils.Preferences;
+import org.cvpcs.android.gemnotifications.utils.StringUtils;
 import com.google.android.c2dm.C2DMessaging;
 
 public class MainActivity extends Activity {
-    public static final String UPDATE_UI_ACTION = "com.cyanogenmod.updatenotify.UPDATE_UI";
+    public static final String UPDATE_UI_ACTION = "org.cvpcs.android.gemnotifications.UPDATE_UI";
 
     private Button mRegisterButton;
     private Button mUnregisterButton;
     private ProgressDialog mProgressDialog;
     
-    private static final String TAG = "CMUpdateNotify-MainActivity";
+    private static final String TAG = "GEMNotifications-MainActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

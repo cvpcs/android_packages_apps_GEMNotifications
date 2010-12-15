@@ -1,4 +1,4 @@
-package com.cyanogenmod.updatenotify.utils;
+package org.cvpcs.android.gemnotifications.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

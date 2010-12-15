@@ -1,4 +1,4 @@
-package com.cyanogenmod.updatenotify.utils;
+package org.cvpcs.android.gemnotifications.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +13,15 @@ import android.content.SharedPreferences;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
-import com.cyanogenmod.updatenotify.MainActivity;
+import org.cvpcs.android.gemnotifications.MainActivity;
 
 public class DeviceRegistrar {
-    public static final String SENDER_ID = "cm.c2dm@gmail.com";
+    public static final String SENDER_ID = "gem.c2dm@gmail.com";
     public static final String STATUS_EXTRA = "Status";
     public static final int REGISTERED_STATUS = 1;
     public static final int UNREGISTERED_STATUS = 2;
 
-    private static final String TAG = "CMUpdateNotify-DeviceRegistrar";
+    private static final String TAG = "GEMNotifications-DeviceRegistrar";
 
     public static void registerWithServer(final Context context, final String deviceRegistrationID) {
         new Thread(new Runnable() {

@@ -1,4 +1,4 @@
-package com.cyanogenmod.updatenotify;
+package org.cvpcs.android.gemnotifications.activities;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.koushikdutta.rommanager.RomPackage;
-import com.koushikdutta.rommanager.RomPart;
-
 public class DownloadActivity extends Activity {
-    private static final String TAG = "CMUpdateNotify-DownloadActivity";
+    private static final String TAG = "GEMNotifications-DownloadActivity";
 
     private TextView mNewVersionTextView;
     private TextView mOldVersionTextView;
@@ -59,7 +56,7 @@ public class DownloadActivity extends Activity {
 
     private RomPackage getRomPackage(String version, String url) {
         ArrayList<String> urls = new ArrayList<String>();
-        urls.add(url);
+        urls.add(url);/*
 
         RomPackage romPackage = new RomPackage();
         RomPart romPart = new RomPart();
@@ -71,18 +68,18 @@ public class DownloadActivity extends Activity {
         romPackage.setName(version);
         romPackage.setParts(new RomPart[] { romPart });
 
-        return romPackage;
+        return romPackage;*/
     }
 
     private OnClickListener mDownloadListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "Starting download: " + mURL);
-
+/*
             Intent i = new Intent();
             i.setClassName("com.koushikdutta.rommanager", "com.koushikdutta.rommanager.DownloadService");
             i.putExtra("rompackage", getRomPackage(mNewVersion, mURL));
-            startService(i);
+            startService(i);*/
             finish();
         }
     };

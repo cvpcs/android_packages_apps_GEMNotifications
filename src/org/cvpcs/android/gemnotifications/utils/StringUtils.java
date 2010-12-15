@@ -1,4 +1,4 @@
-package com.cyanogenmod.updatenotify.utils;
+package org.cvpcs.android.gemnotifications.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +20,7 @@ public class StringUtils {
     
     public static boolean compareModVersions(String newVersion, String oldVersion) {
         boolean newer = false;
-        Pattern pattern = Pattern.compile("CyanogenMod-(\\d.\\d.\\d)-");
+        Pattern pattern = Pattern.compile("[^-]+-(\\d.\\d.\\d)-");
         Matcher match;
 
         // Match  new version.

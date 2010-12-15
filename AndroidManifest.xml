@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cyanogenmod.updatenotify" android:versionCode="1"
-    android:versionName="1.0">
+    package="org.cvpcs.android.GEMNotifications" android:versionCode="1"
+    android:versionName="1.0" android:sharedUserId="android.uid.gem">
 
     <!--
         Only this application can receive the messages and registration
         result
     -->
-    <permission android:name="com.cyanogenmod.updatenotify.permission.C2D_MESSAGE"
+    <permission android:name="org.cvpcs.android.GEMNotifications.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission
-        android:name="com.cyanogenmod.updatenotify.permission.C2D_MESSAGE" />
+    <uses-permission android:name="org.cvpcs.android.GEMNotifications.permission.C2D_MESSAGE" />
 
     <!-- This app has permission to register and receive message -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -21,16 +20,17 @@
 
     <application android:icon="@drawable/icon"
         android:label="@string/app_name">
-        <activity android:name=".MainActivity" android:label="@string/app_name">
+
+        <activity android:name=".activities.GEMNotifications" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         
-        <activity android:name=".DownloadActivity" android:label="@string/app_name">
+        <activity android:name=".activities.DownloadActivity" android:label="@string/app_name">
         </activity>
 
-        <service android:name=".C2DMReceiver" />
+        <service android:name=".services.C2DMReceiver" />
 
         <!--
             Only Google services can send messages to the app. If this
@@ -42,12 +42,12 @@
             <!-- Receive actual messages -->
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.cyanogenmod.updatenotify" />
+                <category android:name="org.cvpcs.android.GEMNotifications" />
             </intent-filter>
             <!-- Receive registration ids -->
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.cyanogenmod.updatenotify" />
+                <category android:name="org.cvpcs.android.GEMNotifications" />
             </intent-filter>
         </receiver>
 

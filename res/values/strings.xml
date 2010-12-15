@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Global -->
-    <string name="app_name">CyanogenMod Update Notifications</string>
+    <string name="app_name">GEM Notifications</string>
     <string name="txt_register">Register</string>
     <string name="txt_unregister">Unregister</string>
     <string name="unknown">\?</string>

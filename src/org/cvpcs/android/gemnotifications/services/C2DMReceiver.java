@@ -1,4 +1,4 @@
-package com.cyanogenmod.updatenotify;
+package org.cvpcs.android.gemnotifications;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,13 +9,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.cyanogenmod.updatenotify.utils.DeviceRegistrar;
-import com.cyanogenmod.updatenotify.utils.Preferences;
-import com.cyanogenmod.updatenotify.utils.StringUtils;
+import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
+import org.cvpcs.android.gemnotifications.utils.Preferences;
+import org.cvpcs.android.gemnotifications.utils.StringUtils;
 import com.google.android.c2dm.C2DMBaseReceiver;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
-    private static final String TAG = "CMUpdateNotify-C2DMReceiver";
+    private static final String TAG = "GEMNotifications-C2DMReceiver";
 
     public C2DMReceiver() {
         super(DeviceRegistrar.SENDER_ID);
