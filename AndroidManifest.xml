@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.cvpcs.android.GEMNotifications" android:versionCode="1"
+    package="org.cvpcs.android.gemnotifications" android:versionCode="1"
     android:versionName="1.0" android:sharedUserId="android.uid.gem">
 
     <!--
@@ -21,7 +21,7 @@
     <application android:icon="@drawable/icon"
         android:label="@string/app_name">
 
-        <activity android:name=".activities.GEMNotifications" android:label="@string/app_name">
+        <activity android:name=".activities.MainActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

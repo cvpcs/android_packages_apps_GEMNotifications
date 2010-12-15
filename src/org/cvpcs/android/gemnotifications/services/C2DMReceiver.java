@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.cvpcs.android.gemnotifications.activities.DownloadActivity;
 import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
 import org.cvpcs.android.gemnotifications.utils.Preferences;
 import org.cvpcs.android.gemnotifications.utils.StringUtils;

@@ -13,6 +13,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.cvpcs.android.gemnotifications.R;
+
 public class DownloadActivity extends Activity {
     private static final String TAG = "GEMNotifications-DownloadActivity";
 
@@ -53,10 +55,10 @@ public class DownloadActivity extends Activity {
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(0);
     }
-
+/*
     private RomPackage getRomPackage(String version, String url) {
         ArrayList<String> urls = new ArrayList<String>();
-        urls.add(url);/*
+        urls.add(url);
 
         RomPackage romPackage = new RomPackage();
         RomPart romPart = new RomPart();
@@ -68,9 +70,9 @@ public class DownloadActivity extends Activity {
         romPackage.setName(version);
         romPackage.setParts(new RomPart[] { romPart });
 
-        return romPackage;*/
+        return romPackage;
     }
-
+*/
     private OnClickListener mDownloadListener = new OnClickListener() {
         @Override
         public void onClick(View v) {

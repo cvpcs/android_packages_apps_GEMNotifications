@@ -13,7 +13,7 @@ import android.content.SharedPreferences;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
-import org.cvpcs.android.gemnotifications.MainActivity;
+import org.cvpcs.android.gemnotifications.activities.MainActivity;
 
 public class DeviceRegistrar {
     public static final String SENDER_ID = "gem.c2dm@gmail.com";

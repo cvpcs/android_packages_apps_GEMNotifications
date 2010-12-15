@@ -14,6 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.cvpcs.android.gemnotifications.R;
+
 import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
 import org.cvpcs.android.gemnotifications.utils.NightlyLicense;
 import org.cvpcs.android.gemnotifications.utils.Preferences;
