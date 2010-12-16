@@ -21,4 +21,6 @@
     <string name="unregistering">Unregistering... Please Wait</string>
     <string name="main_description">To enable push notifications of new versions,
         you must register your device with the update servers.</string>
+    <string name="main_updates">Receive notifications of new updates.</string>
+    <string name="main_patches">Receive notifications of patches.</string>
 </resources>

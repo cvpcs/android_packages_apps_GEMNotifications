@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -8,14 +8,34 @@
 	<TextView android:id="@+id/description"
 		android:text="@string/main_description"
 		android:textColor="#FFFFFF"
-		android:layout_width="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
 
 	<LinearLayout
+		android:orientation="vertical"
+		android:layout_centerInParent="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<CheckBox android:id="@+id/updates"
+			android:text="@string/main_updates"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+		<CheckBox android:id="@+id/patches"
+			android:text="@string/main_patches"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+	</LinearLayout>
+
+	<LinearLayout
 		android:orientation="horizontal"
+		android:layout_alignParentBottom="true"
+		android:gravity="center"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:paddingTop="10dip">
+		android:layout_height="wrap_content">
 
 		<Button android:id="@+id/register"
 			android:text="@string/register"
@@ -31,4 +51,4 @@
 
 	</LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

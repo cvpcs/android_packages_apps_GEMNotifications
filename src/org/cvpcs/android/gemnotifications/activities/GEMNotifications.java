@@ -12,13 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
 import org.cvpcs.android.gemnotifications.R;
 
 import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
+import org.cvpcs.android.gemnotifications.utils.GEMInfo;
 import org.cvpcs.android.gemnotifications.utils.Preferences;
-import org.cvpcs.android.gemnotifications.utils.StringUtils;
 import com.google.android.c2dm.C2DMessaging;
 
 public class GEMNotifications extends Activity {
@@ -26,6 +29,8 @@ public class GEMNotifications extends Activity {
 
     private Button mRegisterButton;
     private Button mUnregisterButton;
+    private CheckBox mUpdateCheckBox;
+    private CheckBox mPatchCheckBox;
     private ProgressDialog mProgressDialog;
 
     private static final String TAG = "GEMNotifications-MainActivity";
@@ -41,9 +46,15 @@ public class GEMNotifications extends Activity {
 
         mUnregisterButton = (Button) findViewById(R.id.unregister);
         mUnregisterButton.setOnClickListener(mOnUnregisterListener);
+        
+        mUpdateCheckBox = (CheckBox) findViewById(R.id.updates);
+        mUpdateCheckBox.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        
+        mPatchCheckBox = (CheckBox) findViewById(R.id.patches);
+        mPatchCheckBox.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
         checkGEM();
-        setupButtons();
+        setup();
 
         registerReceiver(mUpdateUIReceiver, new IntentFilter(UPDATE_UI_ACTION));
     }
@@ -53,7 +64,7 @@ public class GEMNotifications extends Activity {
         SharedPreferences.Editor editor = settings.edit();
         String gem = settings.getString(Preferences.GEM_KEY, null);
         
-        if (gem != null && !gem.equals(StringUtils.getGEMString())) {
+        if (gem != null && !gem.equals(GEMInfo.STRING)) {
             Log.d(TAG, "Build Changed -- Removing settings.");
             editor.remove(Preferences.NOTIFICATIONS_KEY);
             editor.remove(Preferences.GEM_KEY);
@@ -62,9 +73,10 @@ public class GEMNotifications extends Activity {
         }
     }
 
-    private void setupButtons() {
+    private void setup() {
         SharedPreferences settings = Preferences.get(this);
         String deviceRegistrationId = settings.getString(Preferences.REGISTRATION_KEY, null);
+        int notifications = settings.getInt(Preferences.NOTIFICATIONS_KEY, 0);
         if (deviceRegistrationId == null) {
             mRegisterButton.setEnabled(true);
             mUnregisterButton.setEnabled(false);
@@ -72,6 +84,8 @@ public class GEMNotifications extends Activity {
             mRegisterButton.setEnabled(false);
             mUnregisterButton.setEnabled(true);
         }
+    	mUpdateCheckBox.setChecked((notifications & Preferences.NOTIFICATIONS_UPDATES) > 0);
+    	mPatchCheckBox.setChecked((notifications & Preferences.NOTIFICATIONS_PATCHES) > 0);
     }
 
     private final OnClickListener mOnRegisterListener = new OnClickListener() {
@@ -98,6 +112,21 @@ public class GEMNotifications extends Activity {
         }
 
     };
+    
+    private final OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener() {
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			int notifications = 0;
+			
+			notifications |= (mUpdateCheckBox.isChecked() ? Preferences.NOTIFICATIONS_UPDATES : 0);
+			notifications |= (mPatchCheckBox.isChecked() ? Preferences.NOTIFICATIONS_PATCHES : 0);
+
+	        SharedPreferences settings = Preferences.get(buttonView.getContext());
+	        SharedPreferences.Editor editor = settings.edit();
+			editor.putInt(Preferences.NOTIFICATIONS_KEY, notifications);
+			editor.commit();
+		}
+	};
 
     private final BroadcastReceiver mUpdateUIReceiver = new BroadcastReceiver() {
         @Override

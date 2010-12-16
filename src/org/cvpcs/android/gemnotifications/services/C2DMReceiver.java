@@ -38,14 +38,14 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 
     @Override
     public void onError(Context context, String errorId) {
+        Log.e(TAG, "Error: " + errorId);
     }
 
     @Override
     protected void onMessage(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
-        
         String type = extras.getString("type");
-        
+
         Log.d(TAG, "Got C2DM Message");
 
         sendNotification(context, type);
@@ -57,7 +57,7 @@ public class C2DMReceiver extends C2DMBaseReceiver {
         // Create Notification
         CharSequence tickerText = getString(R.string.notif_update_ticker);
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(R.drawable.icon, tickerText, when);
+        Notification notification = new Notification(R.drawable.app_icon, tickerText, when);
         notification.defaults |= Notification.DEFAULT_SOUND;
 
         // Define expanded view

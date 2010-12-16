@@ -85,10 +85,10 @@ public class DeviceRegistrar {
     
     private static void saveGEM(Context context) {
         SharedPreferences.Editor editor = Preferences.get(context).edit();
-        editor.putString(Preferences.GEM_KEY, StringUtils.getGEMString());
+        editor.putString(Preferences.GEM_KEY, GEMInfo.STRING);
         editor.commit();
 
-        Log.d(TAG, "Saved buildType=" + StringUtils.getGEMString());
+        Log.d(TAG, "Saved buildType=" + GEMInfo.STRING);
     }
     
     private static void removeGEM(Context context) {
@@ -101,13 +101,13 @@ public class DeviceRegistrar {
     
 
     private static HttpResponse makeRegisterRequest(Context context, String deviceRegistrationID) throws Exception {
-        List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+        List<NameValuePair> params = new ArrayList<NameValuePair>(4);
         params.add(new BasicNameValuePair("registration_id", deviceRegistrationID));
-        params.add(new BasicNameValuePair("gem", StringUtils.getGEMString()));
-        params.add(new BasicNameValuePair("notifications", "0"));
+        params.add(new BasicNameValuePair("gem", GEMInfo.STRING));
+        params.add(new BasicNameValuePair("device", GEMInfo.DEVICE));
 
-//        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-//        params.add(new BasicNameValuePair("deviceId", deviceId));
+        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+        params.add(new BasicNameValuePair("device_id", deviceId));
 
         RegistrationClient client = new RegistrationClient();
         return client.registerRequest(params);
@@ -115,10 +115,8 @@ public class DeviceRegistrar {
 
     private static HttpResponse makeUnregisterRequest(Context context, String deviceRegistrationID) throws Exception {
         List<NameValuePair> params = new ArrayList<NameValuePair>(1);
-        params.add(new BasicNameValuePair("registration_id", deviceRegistrationID));
-
-//        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-//        params.add(new BasicNameValuePair("deviceId", deviceId));
+        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+        params.add(new BasicNameValuePair("device_id", deviceId));
 
         RegistrationClient client = new RegistrationClient();
         return client.unregisterRequest(params);
