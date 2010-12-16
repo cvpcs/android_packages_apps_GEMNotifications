@@ -13,7 +13,7 @@ import android.content.SharedPreferences;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
-import org.cvpcs.android.gemnotifications.activities.MainActivity;
+import org.cvpcs.android.gemnotifications.activities.GEMNotifications;
 
 public class DeviceRegistrar {
     public static final String SENDER_ID = "gem.c2dm@gmail.com";
@@ -26,20 +26,13 @@ public class DeviceRegistrar {
     public static void registerWithServer(final Context context, final String deviceRegistrationID) {
         new Thread(new Runnable() {
             public void run() {
-                String buildType = null;
-                Intent updateUIIntent = new Intent(MainActivity.UPDATE_UI_ACTION);
-                
-                if (StringUtils.isRunningNightly()) {
-                    buildType = "nightly";
-                } else {
-                    buildType = "stable";
-                }
+                Intent updateUIIntent = new Intent(GEMNotifications.UPDATE_UI_ACTION);
 
                 try {
                     HttpResponse res = makeRegisterRequest(context, deviceRegistrationID);
                     if (res.getStatusLine().getStatusCode() == 200) {
                         saveDeviceRegistration(context, deviceRegistrationID);
-                        saveBuildType(context, buildType);
+                        saveGEM(context);
                         updateUIIntent.putExtra(STATUS_EXTRA, REGISTERED_STATUS);
                         context.sendBroadcast(updateUIIntent);
                     } else {
@@ -55,13 +48,13 @@ public class DeviceRegistrar {
     public static void unregisterWithServer(final Context context, final String deviceRegistrationID) {
         new Thread(new Runnable() {
             public void run() {
-                Intent updateUIIntent = new Intent(MainActivity.UPDATE_UI_ACTION);
+                Intent updateUIIntent = new Intent(GEMNotifications.UPDATE_UI_ACTION);
 
                 try {
                     HttpResponse res = makeUnregisterRequest(context, deviceRegistrationID);
                     if (res.getStatusLine().getStatusCode() == 200) {
                         removeDeviceRegistration(context);
-                        removeBuildType(context);
+                        removeGEM(context);
                         updateUIIntent.putExtra(STATUS_EXTRA, UNREGISTERED_STATUS);
                         context.sendBroadcast(updateUIIntent);
                     } else {
@@ -76,7 +69,7 @@ public class DeviceRegistrar {
 
     private static void saveDeviceRegistration(Context context, String deviceRegistrationID) {
         SharedPreferences.Editor editor = Preferences.get(context).edit();
-        editor.putString(Preferences.DEVICEREGISTRATION_KEY, deviceRegistrationID);
+        editor.putString(Preferences.REGISTRATION_KEY, deviceRegistrationID);
         editor.commit();
 
         Log.d(TAG, "Saved deviceRegistrationID=" + deviceRegistrationID);
@@ -84,23 +77,23 @@ public class DeviceRegistrar {
     
     private static void removeDeviceRegistration(Context context) {
         SharedPreferences.Editor editor = Preferences.get(context).edit();
-        editor.remove(Preferences.DEVICEREGISTRATION_KEY);
+        editor.remove(Preferences.REGISTRATION_KEY);
         editor.commit();
 
         Log.d(TAG, "Removed deviceRegistrationID");
     }
     
-    private static void saveBuildType(Context context, String buildType) {
+    private static void saveGEM(Context context) {
         SharedPreferences.Editor editor = Preferences.get(context).edit();
-        editor.putString(Preferences.BUILDTYPE_KEY, buildType);
+        editor.putString(Preferences.GEM_KEY, StringUtils.getGEMString());
         editor.commit();
 
-        Log.d(TAG, "Saved buildType=" + buildType);
+        Log.d(TAG, "Saved buildType=" + StringUtils.getGEMString());
     }
     
-    private static void removeBuildType(Context context) {
+    private static void removeGEM(Context context) {
         SharedPreferences.Editor editor = Preferences.get(context).edit();
-        editor.remove(Preferences.BUILDTYPE_KEY);
+        editor.remove(Preferences.GEM_KEY);
         editor.commit();
 
         Log.d(TAG, "Removed buildType");
@@ -108,31 +101,24 @@ public class DeviceRegistrar {
     
 
     private static HttpResponse makeRegisterRequest(Context context, String deviceRegistrationID) throws Exception {
-        List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-        params.add(new BasicNameValuePair("deviceRegistrationId", deviceRegistrationID));
+        List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+        params.add(new BasicNameValuePair("registration_id", deviceRegistrationID));
+        params.add(new BasicNameValuePair("gem", StringUtils.getGEMString()));
+        params.add(new BasicNameValuePair("notifications", "0"));
 
-        if (StringUtils.isRunningNightly()) {
-            params.add(new BasicNameValuePair("stable", "N"));
-            params.add(new BasicNameValuePair("nightly", "Y"));
-        } else {
-            params.add(new BasicNameValuePair("stable", "Y"));
-            params.add(new BasicNameValuePair("nightly", "N"));
-        }
-        params.add(new BasicNameValuePair("device", StringUtils.getDevice()));
-
-        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-        params.add(new BasicNameValuePair("deviceId", deviceId));
+//        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+//        params.add(new BasicNameValuePair("deviceId", deviceId));
 
         RegistrationClient client = new RegistrationClient();
         return client.registerRequest(params);
     }
 
     private static HttpResponse makeUnregisterRequest(Context context, String deviceRegistrationID) throws Exception {
-        List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-        params.add(new BasicNameValuePair("deviceRegistrationId", deviceRegistrationID));
+        List<NameValuePair> params = new ArrayList<NameValuePair>(1);
+        params.add(new BasicNameValuePair("registration_id", deviceRegistrationID));
 
-        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-        params.add(new BasicNameValuePair("deviceId", deviceId));
+//        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+//        params.add(new BasicNameValuePair("deviceId", deviceId));
 
         RegistrationClient client = new RegistrationClient();
         return client.unregisterRequest(params);

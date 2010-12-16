@@ -1,0 +1,48 @@
+The following is a definition of the kind of information sent during
+push messages.  Essentially a user can request to receive information
+about any set of GEM related information that they wish, and then
+will receive push notifications about those releases.
+
+Note: no data is stored on our third party servers without the users
+explicit consent (they must register for the service in order for this
+application to work).  I present the source code here for scrutiny so
+that suspicious users may verify that the information below is all
+that is stored on the third-party server, and is only used to determine
+what messages should be directed at a given device.
+
+Data stored on the 3rd party server (c2dm.ccroms.net):
+
+    Registration ID: 
+        what is it:
+            the unique registration ID that google will use to identify
+            this device when sending push messages.
+        why is it stored:
+            this is required in order to send a message to any given
+            device.  it is considered the unique id for any piece of
+            hardware that registers for the service
+
+    GEM:
+        what is it:
+            the identifier of what particular gem version you are running
+            at the time of registration.  this essentially consists of a
+            string such as "sapphire-1.1.1/01" where "sapphire" is the
+            gem, "1.1.1" is the core version, and "01" is a patch level.
+        why is it stored:
+            this information is stored to help identify what notifications
+            actually pertain to your specific device.  for instance, if
+            you are running version 1.1.1 of sapphire, you don't want to
+            get notifications about ruby 1.1.0 being out or similar.
+
+    Notifications:
+        what is it:
+            a bitmask that defines which notifications you wish to actually
+            receive.  this bitmask is done in the form of a 32 bit integer
+            with each bit of the integer representing a different type of
+            notification, and is 0 if the user requests not to receive that
+            notification, and is 1 if the user wishes to receive that
+            notification.  NOTE: an integer value of 0 will cancel
+            registration of the device for c2dm as it would prevent the
+            device from ever receiving a notification anyway
+        why is it stored:
+            to allow the user to specify which types of messages they want
+            to actually receive
