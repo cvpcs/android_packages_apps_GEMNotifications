@@ -101,9 +101,11 @@ public class DeviceRegistrar {
     
 
     private static HttpResponse makeRegisterRequest(Context context, String deviceRegistrationID) throws Exception {
-        List<NameValuePair> params = new ArrayList<NameValuePair>(4);
+        List<NameValuePair> params = new ArrayList<NameValuePair>(6);
         params.add(new BasicNameValuePair("registration_id", deviceRegistrationID));
-        params.add(new BasicNameValuePair("gem", GEMInfo.STRING));
+        params.add(new BasicNameValuePair("gem_name", GEMInfo.NAME));
+        params.add(new BasicNameValuePair("gem_version", GEMInfo.VERSION));
+        params.add(new BasicNameValuePair("gem_patch", GEMInfo.PATCH));
         params.add(new BasicNameValuePair("device", GEMInfo.DEVICE));
 
         String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);

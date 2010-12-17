@@ -13,8 +13,8 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 
 public class RegistrationClient {
-    static final String REGISTER_URL = "http://c2dm.ccroms.net/register.php";
-    static final String UNREGISTER_URL = "http://c2dm.ccroms.net/unregister.php";
+    static final String REGISTER_URL = "http://c2dm.ccroms.net/c2dm/register";
+    static final String UNREGISTER_URL = "http://c2dm.ccroms.net/c2dm/unregister";
 
     public HttpResponse registerRequest(List<NameValuePair> params) throws Exception {
         final HttpParams httpparams = createParamsForPosting();
