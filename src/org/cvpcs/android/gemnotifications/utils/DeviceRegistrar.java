@@ -10,7 +10,6 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.provider.Settings.Secure;
 import android.util.Log;
 
 import org.cvpcs.android.gemnotifications.activities.GEMNotifications;
@@ -107,9 +106,7 @@ public class DeviceRegistrar {
         params.add(new BasicNameValuePair("gem_version", GEMInfo.VERSION));
         params.add(new BasicNameValuePair("gem_patch", GEMInfo.PATCH));
         params.add(new BasicNameValuePair("device", GEMInfo.DEVICE));
-
-        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-        params.add(new BasicNameValuePair("device_id", deviceId));
+        params.add(new BasicNameValuePair("device_id", GEMInfo.DEVICE_ID));
 
         RegistrationClient client = new RegistrationClient();
         return client.registerRequest(params);
@@ -117,8 +114,7 @@ public class DeviceRegistrar {
 
     private static HttpResponse makeUnregisterRequest(Context context, String deviceRegistrationID) throws Exception {
         List<NameValuePair> params = new ArrayList<NameValuePair>(1);
-        String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-        params.add(new BasicNameValuePair("device_id", deviceId));
+        params.add(new BasicNameValuePair("device_id", GEMInfo.DEVICE_ID));
 
         RegistrationClient client = new RegistrationClient();
         return client.unregisterRequest(params);
