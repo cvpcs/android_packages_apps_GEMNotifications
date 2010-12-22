@@ -9,7 +9,7 @@
     <!-- Notifications -->
     <string name="notif_update_ticker">GEM Update Available</string>
     <string name="notif_update_title">Update Available</string>
-    <string name="notif_update_long">A new version of your GEM is available!</string>
+    <string name="notif_update_long">Click here to be taken to a page with more information.</string>
     <string name="notif_patch_ticker">GEM Patch Available</string>
     <string name="notif_patch_title">Patch Available</string>
     <string name="notif_patch_long">A patch has been released for your current GEM!</string>
