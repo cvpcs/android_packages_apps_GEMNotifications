@@ -47,43 +47,95 @@ public class C2DMReceiver extends C2DMBaseReceiver {
         Bundle extras = intent.getExtras();
 
         // we assume we only have 1 type right now, and we just pass a url to the page we want to direct them to
-        String url = extras.getString("url");
+        int type = 0;
+        try {
+            type = Integer.parseInt(extras.getString("t"));
+        } catch (Exception e) {
+            Log.e(TAG, "Error parsing notification type", e);
+        }
+
+        String url = extras.getString("u");
 
         Log.d(TAG, "Got C2DM Message");
 
-        sendNotification(context, url);
+        sendNotification(context, type, url);
     }
 
-    private void sendNotification(Context context, String url) {
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    private void sendNotification(Context context, int type, String url) {
+        SharedPreferences prefs = Preferences.get(context);
+        int notifPref = prefs.getInt(Preferences.NOTIFICATIONS_KEY, 0);
 
-        // Create Notification
-        CharSequence tickerText = getString(R.string.notif_update_ticker);
-        long when = System.currentTimeMillis();
-        Notification notification = new Notification(R.drawable.app_icon, tickerText, when);
-        notification.defaults |= Notification.DEFAULT_SOUND;
-        notification.defaults |= Notification.FLAG_AUTO_CANCEL;
-
-        // Define expanded view
-        CharSequence contentTitle = getString(R.string.notif_update_title);
-        CharSequence contentText = getString(R.string.notif_update_long);
-
-        // create our notification view
-        Intent notificationIntent;
-        try {
-            // try to open browser
-            notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        } catch(Exception e) {
-            // FAIL
-            Log.e(TAG, "Error creating intent for browser", e);
-            notificationIntent = new Intent(context, GEMNotifications.class);
+        // first check if we should even bother.  type should be an integer with exactly 1 bit selected,
+        // representing the notification type.  we then logically AND this with our preferences, which
+        // are a bitmask of which notifications we want to receive.  If the result is 0, then it means
+        // no prefs matched the type, so we return.
+        if((type & notifPref) == 0) {
+            return;
         }
 
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        Notification notification = null;
 
-        // Fire notification
-        nm.notify(0, notification);
+        if((type & Preferences.NOTIFICATIONS_UPDATES) > 0) {
+            // Create Notification
+            CharSequence tickerText = getString(R.string.notif_update_ticker);
+            long when = System.currentTimeMillis();
+            notification = new Notification(R.drawable.app_icon, tickerText, when);
+            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            // Define expanded view
+            CharSequence contentTitle = getString(R.string.notif_update_title);
+            CharSequence contentText = getString(R.string.notif_update_long);
+
+            // create our notification view
+            Intent notificationIntent;
+            try {
+                // try to open browser
+                notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            } catch(Exception e) {
+                // FAIL
+                Log.e(TAG, "Error creating intent for browser", e);
+                notificationIntent = new Intent(context, GEMNotifications.class);
+            }
+
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+
+            notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        }
+
+        if((type & Preferences.NOTIFICATIONS_PATCHES) > 0) {
+            // Create Notification
+            CharSequence tickerText = getString(R.string.notif_patch_ticker);
+            long when = System.currentTimeMillis();
+            notification = new Notification(R.drawable.app_icon, tickerText, when);
+            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            // Define expanded view
+            CharSequence contentTitle = getString(R.string.notif_patch_title);
+            CharSequence contentText = getString(R.string.notif_patch_long);
+
+            // create our notification view
+            Intent notificationIntent;
+            try {
+                // try to open browser
+                notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            } catch(Exception e) {
+                // FAIL
+                Log.e(TAG, "Error creating intent for browser", e);
+                notificationIntent = new Intent(context, GEMNotifications.class);
+            }
+
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+
+            notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        }
+
+        if(notification != null) {
+            // Fire notification
+            nm.notify(0, notification);
+        }
     }
 }
