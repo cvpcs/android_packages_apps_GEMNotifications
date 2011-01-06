@@ -1,4 +1,4 @@
-package org.cvpcs.android.gemnotifications.utils;
+package org.cvpcs.android.gemnotifications.util;
 
 import android.util.Base64;
 

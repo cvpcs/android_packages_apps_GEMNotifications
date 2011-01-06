@@ -1,4 +1,4 @@
-package org.cvpcs.android.gemnotifications.services;
+package org.cvpcs.android.gemnotifications.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,9 +12,9 @@ import android.util.Log;
 
 import org.cvpcs.android.gemnotifications.R;
 
-import org.cvpcs.android.gemnotifications.activities.GEMNotifications;
-import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
-import org.cvpcs.android.gemnotifications.utils.Preferences;
+import org.cvpcs.android.gemnotifications.activity.GEMNotifications;
+import org.cvpcs.android.gemnotifications.util.DeviceRegistrar;
+import org.cvpcs.android.gemnotifications.util.Preferences;
 
 import com.google.android.c2dm.C2DMBaseReceiver;
 

@@ -1,4 +1,4 @@
-package org.cvpcs.android.gemnotifications.utils;
+package org.cvpcs.android.gemnotifications.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import org.cvpcs.android.gemnotifications.activities.GEMNotifications;
+import org.cvpcs.android.gemnotifications.activity.GEMNotifications;
 
 public class DeviceRegistrar {
     public static final String SENDER_ID = "gem.c2dm@gmail.com";

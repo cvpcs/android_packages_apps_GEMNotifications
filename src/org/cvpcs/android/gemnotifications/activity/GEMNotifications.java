@@ -1,4 +1,4 @@
-package org.cvpcs.android.gemnotifications.activities;
+package org.cvpcs.android.gemnotifications.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 import org.cvpcs.android.gemnotifications.R;
 
-import org.cvpcs.android.gemnotifications.utils.DeviceRegistrar;
-import org.cvpcs.android.gemnotifications.utils.GEMInfo;
-import org.cvpcs.android.gemnotifications.utils.Preferences;
+import org.cvpcs.android.gemnotifications.util.DeviceRegistrar;
+import org.cvpcs.android.gemnotifications.util.GEMInfo;
+import org.cvpcs.android.gemnotifications.util.Preferences;
 import com.google.android.c2dm.C2DMessaging;
 
 public class GEMNotifications extends Activity {
